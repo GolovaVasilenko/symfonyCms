@@ -37,7 +37,7 @@ class UserController extends AdminController
     public function createUser(Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
         $user = new User();
-        $form = $this->createForm(UserType::class,$user);
+        $form = $this->createForm(UserType::class, $user);
         $em = $this->getDoctrine()->getManager();
 
         $form->handleRequest($request);
@@ -51,7 +51,7 @@ class UserController extends AdminController
             return $this->redirectToRoute("admin_user");
         }
         $forRender = parent::renderDefault();
-        $forRender['title'] = 'Register User';
+        $forRender['title'] = 'Create New User';
         $forRender['form'] = $form->createView();
         return $this->render('admin/user/form.html.twig', $forRender);
     }

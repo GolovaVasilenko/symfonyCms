@@ -8,10 +8,16 @@
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
-
-
     </head>
     <body>
+    <p>
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <a href="{{ path('app_logout') }}">LOGOUT</a>
+            <a href="{{ path('admin_dashboard') }}">ADMIN PANEL</a>
+        {% else %}
+            <a href="{{ path('app_login') }}">LOGIN</a>
+        {% endif %}
+    </p>
         {% block body %}{% endblock %}
 
         {% block javascripts %}
