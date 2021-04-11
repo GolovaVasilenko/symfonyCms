@@ -51,11 +51,40 @@ class PageController extends AdminController
             $em->persist($page);
             $em->flush();
 
-            return $this->redirectToRoute("admin_user");
+            return $this->redirectToRoute("admin_page");
         }
         $forRender = parent::renderDefault();
         $forRender['title'] = 'Create New Page';
         $forRender['form'] = $form->createView();
+        return $this->render('admin/page/form.html.twig', $forRender);
+    }
+
+    /**
+     * @Route("/admin/page/update/{id}", name="admin_page_update", methods={"POST","GET"})
+     * @param Request $request
+     * @return Response
+     */
+    public function updatePage(Request $request): Response
+    {
+        $page = $this->getDoctrine()
+            ->getRepository(Page::class)
+            ->find($request->get('id'));
+
+        $form = $this->createForm(PageType::class, $page);
+        $em = $this->getDoctrine()->getManager();
+
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()) {
+            $page->setUpdatedAtValue();
+            $page->setCreatedAtValue();
+            $em->persist($page);
+            $em->flush();
+        }
+
+        $forRender = parent::renderDefault();
+        $forRender['title'] = 'Update Page';
+        $forRender['form'] = $form->createView();
+        $forRender['page'] = $page;
         return $this->render('admin/page/form.html.twig', $forRender);
     }
 }

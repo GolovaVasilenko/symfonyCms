@@ -92,6 +92,13 @@ function strftime(sFormat, date) {
 }
 
 $(document).ready(function($) {
+
+    $('.js-delete').on('click', function() {
+        if (window.confirm("Do you really want to remove this item?")) {
+
+        }
+    });
+
     $('#data-table').DataTable({
         processing: true,
         info: false,
@@ -118,7 +125,7 @@ $(document).ready(function($) {
             {
                 data: "id",
                 render: function (data) {
-                    return "<a href='#' class='btn btn-primary js-edit' data-page-id=" + data + ">Edit</a> <button class='btn btn-danger js-delete' data-page-id=" + data + ">Delete</button>";
+                    return "<a href='/admin/page/update/" + data + "' class='btn btn-primary js-edit' data-page-id=" + data + ">Edit</a> <button class='btn btn-danger js-delete' data-page-id=" + data + ">Delete</button>";
                 }
             }
         ]
