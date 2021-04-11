@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\PageRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass=PageRepository::class)
@@ -23,6 +24,7 @@ class Page
     private $title;
 
     /**
+     * @Gedmo\Slug(fields={"title"})
      * @ORM\Column(type="string", length=255)
      */
     private $slug;
@@ -74,13 +76,6 @@ class Page
         return $this->slug;
     }
 
-    public function setSlug(string $slug): self
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
-
     public function getBody(): ?string
     {
         return $this->body;
@@ -122,6 +117,16 @@ class Page
         return $this->created_at;
     }
 
+    /**
+     * @return $this
+     */
+    public function setCreatedAtValue(): Page
+    {
+        $this->created_at = new \DateTime();
+
+        return $this;
+    }
+
     public function setCreatedAt(?\DateTimeInterface $created_at): self
     {
         $this->created_at = $created_at;
@@ -132,6 +137,13 @@ class Page
     public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updated_at;
+    }
+
+    public function setUpdatedAtValue(): Page
+    {
+        $this->updated_at = new \DateTime();
+
+        return $this;
     }
 
     public function setUpdatedAt(?\DateTimeInterface $updated_at): self

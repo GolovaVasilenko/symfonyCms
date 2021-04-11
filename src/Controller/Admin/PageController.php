@@ -34,7 +34,7 @@ class PageController extends AdminController
     }
 
     /**
-     * @Route("/admin/page/create", name="admin_page_create", methods={"POST"})
+     * @Route("/admin/page/create", name="admin_page_create", methods={"POST","GET"})
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
@@ -46,7 +46,8 @@ class PageController extends AdminController
 
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
-            $page->setUpdatedAt((new \DateTime('NOW'))->format('Y-m-d H:i'));
+            $page->setUpdatedAtValue();
+            $page->setCreatedAtValue();
             $em->persist($page);
             $em->flush();
 
