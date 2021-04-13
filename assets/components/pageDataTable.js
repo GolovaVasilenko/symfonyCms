@@ -93,9 +93,18 @@ function strftime(sFormat, date) {
 
 $(document).ready(function($) {
 
-    $('.js-delete').on('click', function() {
+    $('#data-table').on('click', '.js-delete', function() {
         if (window.confirm("Do you really want to remove this item?")) {
-
+            let url = $(this).data('action-url');
+            $.ajax({
+                method: 'post',
+                url: url,
+                success: function(response) {
+                    if(response.status) {
+                        window.location.href = '/admin/page/';
+                    }
+                }
+            });
         }
     });
 
@@ -125,7 +134,7 @@ $(document).ready(function($) {
             {
                 data: "id",
                 render: function (data) {
-                    return "<a href='/admin/page/update/" + data + "' class='btn btn-primary js-edit' data-page-id=" + data + ">Edit</a> <button class='btn btn-danger js-delete' data-page-id=" + data + ">Delete</button>";
+                    return "<a href='/admin/page/update/" + data + "' class='btn btn-primary js-edit' data-page-id=" + data + ">Edit</a> <button class='btn btn-danger js-delete' data-action-url='/admin/page/delete/" + data + "'>Delete</button>";
                 }
             }
         ]

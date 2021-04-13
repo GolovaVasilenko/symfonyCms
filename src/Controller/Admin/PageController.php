@@ -76,7 +76,6 @@ class PageController extends AdminController
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
             $page->setUpdatedAtValue();
-            $page->setCreatedAtValue();
             $em->persist($page);
             $em->flush();
         }
@@ -86,5 +85,24 @@ class PageController extends AdminController
         $forRender['form'] = $form->createView();
         $forRender['page'] = $page;
         return $this->render('admin/page/form.html.twig', $forRender);
+    }
+
+    /**
+     * @Route("/admin/page/delete/{id}", name="admin_page_delete", methods={"POST"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function removePage(Request $request)
+    {
+        $page = $this->getDoctrine()
+            ->getRepository(Page::class)
+            ->find($request->get('id'));
+        $em = $this->getDoctrine()->getManager();
+        if(!empty($page)) {
+            $em->remove($page);
+            $em->flush();
+            return $this->json(['status' => 1]);
+        }
+        return $this->json(['status' => 0]);
     }
 }
