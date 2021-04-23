@@ -5,7 +5,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">{{ data.title }}</h1>
+                <h1 class="m-0 text-dark">{{ title }}</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -23,16 +23,37 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
+                    <div class="card-title">
+                        <p class="mt-4 ml-5">
+                            <a href="{{ path('admin_user_create') }}" class="btn btn-primary">Create New User</a>
+                        </p>
+                    </div>
                     <div class="card-body">
-
-                        <h1>Hello {{ controller_name }}! ✅</h1>
-                        <p><a href="{{ path('admin_user_create') }}">Create User</a></p>
-                        <h2>{{ data.title }}</h2>
-                        <ul>
-                            {% for user in users %}
-                                <li>{{ user.email }} - {{ user.roles | json_encode }}</li>
-                            {% endfor %}
-                        </ul>
+                        <div class="card-body table-responsive p-0">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>User Name</th>
+                                    <th>User Role</th>
+                                    <th>Email</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for user in users %}
+                                <tr>
+                                    <td>Name</td>
+                                    <td>{{ user.roles | json_encode }}</td>
+                                    <td>{{ user.email }}</td>
+                                    <td>
+                                        <a href="#" class="btn btn-primary">Edit</a>
+                                        <button class="btn btn-danger">Delete</button>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

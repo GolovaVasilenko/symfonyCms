@@ -50,6 +50,10 @@ class PageController extends AdminController
             $page->setCreatedAtValue();
             $em->persist($page);
             $em->flush();
+            $this->addFlash(
+                'notice',
+                'Your changes were saved!'
+            );
 
             return $this->redirectToRoute("admin_page");
         }
@@ -78,6 +82,10 @@ class PageController extends AdminController
             $page->setUpdatedAtValue();
             $em->persist($page);
             $em->flush();
+            $this->addFlash(
+                'notice',
+                'Your changes were saved!'
+            );
         }
 
         $forRender = parent::renderDefault();
@@ -101,6 +109,10 @@ class PageController extends AdminController
         if(!empty($page)) {
             $em->remove($page);
             $em->flush();
+            $this->addFlash(
+                'notice',
+                'Your changes were saved!'
+            );
             return $this->json(['status' => 1]);
         }
         return $this->json(['status' => 0]);
