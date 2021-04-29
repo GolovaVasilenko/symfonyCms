@@ -41,4 +41,16 @@ class UserService
         $this->repositpry->create($user);
         return $this;
     }
+
+    /**
+     * @param User $user
+     * @return object
+     */
+    public function handleUpdate(User $user): object
+    {
+        $password = $this->encoder->encodePassword($user, $user->getPlainPassword());
+        $user->setPassword($password);
+        $this->repositpry->save($user);
+        return $this;
+    }
 }
